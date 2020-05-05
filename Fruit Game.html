@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Fruit Game</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="style.css">
+      </head>
+    <body onload="start()">
+        <h1 style="text-align: center;">Fruit Machine</h1>
+        
+        <div class="row" style="width: 50%; margin: 0 auto;padding: 20px;background: #f7f7f6;">
+            <div class=col-md-4 style="width: 100%;text-align: center;background-color: rgb(224, 233, 233);
+            border-color: green;border-width: 5x;border-style: solid;padding: 10px;">
+                <h2>Welcome to Fruit machine game</h2>
+                <hr>
+                <span class="Credit" style="float: left;">Credit</span>
+                <span class="Credit-point" id= "cp" style="background-color: black;color: blanchedalmond;float: left;width: 10%;">0</span>
+                <span class="winning-point" id="wp" style="background-color: black;text-align-last: auto;color: blanchedalmond;float: right;width: 10%;">0</span>
+                <span class="winning" style="float: right;">Winning</span>
+                
+                <br>
+                <br>
+                <div class="d2" style="background-color: brown;">
+                <img src="img\apple.png" id="img1" alt="img1">
+                <img src="img\apple.png" id="img2" alt="img2">
+                <img src="img\apple.png" id="img3" alt="img3">
+                </div>   
+                <span class="msg" id="msg" style="background-color: antiquewhite;">Messge</span> 
+                <div class="btn">
+                    <button type="button" id="bt1" onclick="spin()">Spin</button> 
+                    <button type="button" id="bt2" onclick="cr()">Credit</button>
+                    <button type="button" id="bt3" onclick="collect()">Collect</button>
+                
+                </div>
+                
+                
+            
+            </div>
+
+                
+
+
+        </div>
+        </div>
+        </body>
+        <script>
+            var imgList=["img/apple.png","img/orange.png","img/banana.png","img/bar.png","img/lemon.png","img/melon.png","img/cherries.png","img/grapes.png"];
+            var credit=0;
+            var winning=0;
+            
+
+            function start(){
+                var rand = Math.floor(Math.random()*imgList.length);
+                var rand2=Math.floor(Math.random()*imgList.length);
+                var rand3 =Math.floor(Math.random()*imgList.length);
+                document.getElementById('img1').src=imgList[rand];
+                document.getElementById('img2').src=imgList[rand2];
+                document.getElementById('img3').src=imgList[rand3];
+                if(credit==0){
+                    document.getElementById('bt1').disabled=true;
+                    document.getElementById('msg').innerHTML="You don't have enough credit";
+                    document.getElementById('bt3').disabled=true;
+                }
+                if(credit>=1){
+                    document.getElementById('bt1').disabled=false;
+                }
+            }
+
+            function spin(){
+                if(credit>=1){
+
+                var rand = Math.floor(Math.random()*imgList.length);
+                var rand2=Math.floor(Math.random()*imgList.length);
+                var rand3 =Math.floor(Math.random()*imgList.length);
+                document.getElementById('img1').src=imgList[rand];
+                document.getElementById('img2').src=imgList[rand2];
+                document.getElementById('img3').src=imgList[rand3];
+                credit=credit-1;
+                document.getElementById('cp').innerHTML=credit;
+                if(rand==rand2 && rand2 ==rand3){
+                    winning+=10;
+                    document.getElementById('wp').innerHTML=winning;
+                    document.getElementById('cp').innerHTML=credit;
+                    document.getElementById('bt3').disabled=false;
+                    document.getElementById('msg').innerHTML="Superb !"
+                }
+                else if(rand2==rand3){
+                    winning+=5
+                    document.getElementById('wp').innerHTML=winning;
+                    document.getElementById('cp').innerHTML=credit;
+                    document.getElementById('bt3').disabled=false;
+                    document.getElementById('msg').innerHTML="Great !"
+                    
+                }
+                else{
+                    document.getElementById('msg').innerHTML="Better Luck Next Time"
+                }
+                }
+                else{
+                    document.getElementById('bt1').disabled=true;
+                    document.getElementById('msg').innerHTML="You don't have enough credit..Collect your Winning" ;
+                }
+                             
+            }
+            function collect(){
+                if(winning>=1){
+                    credit+=winning;
+                    winning=0;
+                    document.getElementById('wp').innerHTML=winning;
+                    document.getElementById('cp').innerHTML=credit;
+                    document.getElementById('bt3').disabled=true;
+                    document.getElementById('bt1').disabled=false;
+                    document.getElementById('msg').innerHTML="Winning Point is Collected"
+                }
+                else{
+                    document.getElementById('bt3').disabled=true;
+                    document.getElementById('msg').innerHTML="You don't have any Winning points"
+
+                }
+
+            }
+
+            function cr(){
+                credit+=1;
+                document.getElementById('cp').innerHTML=""+credit;
+                document.getElementById('msg').innerHTML="1 Credit added";
+                document.getElementById('bt1').disabled=false;
+            }
+
+
+        </script>
+
+
+</html>
+
+    
